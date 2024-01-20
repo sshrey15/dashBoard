@@ -91,6 +91,10 @@ export default function Home() {
     setCgpa(newData);
   };
 
+  const graphWidth = window.innerWidth > 768 ? 300 : window.innerWidth - 50;
+const graphHeight = window.innerHeight > 768 ? 160 : window.innerHeight / 2;
+
+
   return (
     <>
       <div className="flex flex-col justify-center items-center">
@@ -99,12 +103,12 @@ export default function Home() {
         </h1>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4 items-center justify-center min-h-screen bg-green-100">
-        <div className="lg:pd-7 sm:p-1 sm:ml-3 lg:ml-10 mt-10 bg-white rounded shadow-xl sm:h-full sm:w-full lg:w-full">
+        <div className="lg:pd-7 sm:p-1 sm:ml-3 lg:ml-10 mt-10 bg-white rounded shadow-xl  sm:w-full lg:w-full">
           
           <h2 className="text-2xl font-bold mb-4 light:text-gray-700">
             Line Chart
           </h2>
-          <Line className="sm:w-full" data={data} width={300} height={160} options={options} />
+          <Line data={data} width={graphWidth} height={graphHeight} options={options} />
         </div>
         <div className=" flex flex-col justify-center items-center w-full">
           {cgpa.reduce((a, b) => a + b, 0) / cgpa.length > 7.5 && (
