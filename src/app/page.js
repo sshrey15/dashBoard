@@ -1,4 +1,7 @@
 "use client";
+import React, { useState } from "react";
+import Confetti from "react-confetti";
+
 import Form from "@/components/Form";
 import {
   Chart as ChartJS,
@@ -6,29 +9,29 @@ import {
   LinearScale,
   PointElement,
   LineElement,
-  Title, // Corrected from 'Ttile'
+  Title,
   Tooltip,
   Legend,
   Filler,
   BarElement,
 } from "chart.js";
+import { Line } from "react-chartjs-2";
 
 ChartJS.register(
   CategoryScale,
-
   LinearScale,
   PointElement,
   BarElement,
   LineElement,
   Filler,
-  Title, // Corrected from 'Ttile'
+  Title,
   Tooltip,
   Legend
 );
 
-import { Bar, Line, Scatter, Bubble, Doughnut } from "react-chartjs-2";
-
 export default function Home() {
+  const [cgpa, setCgpa] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
+
   const data = {
     labels: [
       "SEM-1",
@@ -42,7 +45,7 @@ export default function Home() {
     ],
     datasets: [
       {
-        data: [9.06, 9.28, 9.28, 9.28, 9.28, 9.28, 9.28, 9.28],
+        data: cgpa,
       },
     ],
   };
@@ -53,7 +56,6 @@ export default function Home() {
         display: false,
       },
     },
-
     elements: {
       line: {
         tension: 0.4,
@@ -67,33 +69,60 @@ export default function Home() {
         hitRadius: 0,
       },
     },
-
     scales: {
       xAxis: {
         display: false,
       },
       yAxis: {
-        display: false,
+        display: true,
+        min: 1,
+        max: 10,
+        stepSize: 0.2,
+        ticks: {
+          callback: function (value, index, values) {
+            return Number(value).toFixed(1);
+          },
+        },
       },
     },
   };
+
+  const handleFormSubmit = (newData) => {
+    setCgpa(newData);
+  };
+
   return (
     <>
       <div className="flex flex-col justify-center items-center">
-        <h1 className="text-6xl font-bold light:text-gray-700">CGPA Calculator</h1>
-        <p className="text-2xl light:text-gray-700">Calculate your CGPA with ease</p>
+        <h1 className="text-3xl font-bold light:text-gray-700">
+          CGPA Calculator
+        </h1>
       </div>
-      <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-4 items-center justify-center min-h-screen bg-green-100">
-        <div className="p-4 ml-10 mt-10 bg-white rounded shadow-md md:w-1/2 lg:w-full">
+      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4 items-center justify-center min-h-screen bg-green-100">
+        <div className="lg:pd-7 sm:p-1 sm:ml-3 lg:ml-10 mt-10 bg-white rounded shadow-xl sm:h-full sm:w-full lg:w-full">
+          
           <h2 className="text-2xl font-bold mb-4 light:text-gray-700">
             Line Chart
           </h2>
-          <Line data={data} width={300} height={160} options={options} />
+          <Line className="sm:w-full" data={data} width={300} height={160} options={options} />
         </div>
-        <div className="flex flex-col justify-center items-center lg:w-full">
-          <h2 className="text-2xl font-bold mb-4 light:text-gray-700">Form</h2>
-          <Form />
-          <p className="mt-4 text-xl light:text-gray-700">Calculated CGPA: </p>
+        <div className=" flex flex-col justify-center items-center w-full">
+          {cgpa.reduce((a, b) => a + b, 0) / cgpa.length > 7.5 && (
+            <>
+              <p className="mt-4 text-xl light:text-gray-700 bg-green-500 p-6">
+                You are eligible for sitting for placements
+              </p>
+              <Confetti />
+            </>
+          ) }
+          <h2 className="text-2xl font-bold mb-4 light:text-gray-700">
+            Enter Data
+          </h2>
+          <Form onSubmit={handleFormSubmit} />
+          <p className="mt-4 text-xl light:text-gray-700 bg-yellow-500 p-6">
+            Calculated CGPA:{" "}
+            {(cgpa.reduce((a, b) => a + b, 0) / cgpa.length).toFixed(3)}
+          </p>
         </div>
       </div>
     </>
