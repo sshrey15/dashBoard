@@ -1,4 +1,5 @@
-"use client"
+"use client";
+import Form from "@/components/Form";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,10 +11,11 @@ import {
   Legend,
   Filler,
   BarElement,
-} from 'chart.js';
+} from "chart.js";
 
 ChartJS.register(
   CategoryScale,
+
   LinearScale,
   PointElement,
   BarElement,
@@ -21,65 +23,79 @@ ChartJS.register(
   Filler,
   Title, // Corrected from 'Ttile'
   Tooltip,
-  Legend,
+  Legend
 );
 
-import {Bar, Line, Scatter, Bubble} from 'react-chartjs-2';
+import { Bar, Line, Scatter, Bubble, Doughnut } from "react-chartjs-2";
 
 export default function Home() {
-
-  const data ={
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+  const data = {
+    labels: [
+      "SEM-1",
+      "SEM-2",
+      "SEM-3",
+      "SEM-4",
+      "SEM-5",
+      "SEM-6",
+      "SEM-7",
+      "SEM-8",
+    ],
     datasets: [
       {
-        data: [10, 100, 30, 40, 50, 60, 70],
+        data: [9.06, 9.28],
       },
     ],
   };
 
-  const options ={
+  const options = {
     plugins: {
       Legend: {
         display: false,
-      }
+      },
     },
 
     elements: {
       line: {
         tension: 0.4,
         borderWidth: 2,
-        borderColor: 'rgba(47, 128, 237, 1)',
+        borderColor: "rgba(47, 128, 237, 1)",
         fill: "start",
-        backgroundColor: 'rgba(47, 128, 237, 0.4)',
-
+        backgroundColor: "rgba(47, 128, 237, 0.4)",
       },
       point: {
         radius: 0,
         hitRadius: 0,
-      }
       },
+    },
 
-      scales:{
-        xAxis: {
-          display: false,
-        },
-        yAxis: {
-          display: false,
-      }
-    }
-  }
+    scales: {
+      xAxis: {
+        display: false,
+      },
+      yAxis: {
+        display: false,
+      },
+    },
+  };
   return (
-   <>
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <div className="p-4 bg-white rounded shadow-md w-64">
-        <h2 className="text-2xl font-bold mb-4 text-gray-700">Line Chart</h2>
-        <Line data={data} width={50} height={25} options={options} />
+    <>
+      <div className="flex flex-col justify-center items-center">
+        <h1 className="text-6xl font-bold light:text-gray-700">CGPA Calculator</h1>
+        <p className="text-2xl light:text-gray-700">Calculate your CGPA with ease</p>
       </div>
-      <div className="p-4 bg-white rounded shadow-md w-64 mt-4">
-        <h2 className="text-2xl font-bold mb-4 text-gray-700">Bar Chart</h2>
-        <Bar data={data} width={50} height={25} options={options} />
+      <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-4 items-center justify-center min-h-screen bg-green-100">
+        <div className="p-4 ml-10 mt-10 bg-white rounded shadow-md md:w-1/2 lg:w-full">
+          <h2 className="text-2xl font-bold mb-4 light:text-gray-700">
+            Line Chart
+          </h2>
+          <Line data={data} width={300} height={160} options={options} />
+        </div>
+        <div className="flex flex-col justify-center items-center lg:w-full">
+          <h2 className="text-2xl font-bold mb-4 light:text-gray-700">Form</h2>
+          <Form />
+          <p className="mt-4 text-xl light:text-gray-700">Calculated CGPA: </p>
+        </div>
       </div>
-    </div>
-   </>
+    </>
   );
 }
