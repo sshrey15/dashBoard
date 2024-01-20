@@ -42,7 +42,7 @@ export default function Home() {
     ],
     datasets: [
       {
-        data: [9.06, 9.28],
+        data: [9.06, 9.28, 9.28, 9.28, 9.28, 9.28, 9.28, 9.28],
       },
     ],
   };
