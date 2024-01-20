@@ -91,8 +91,7 @@ export default function Home() {
     setCgpa(newData);
   };
 
-  const graphWidth = window.innerWidth > 768 ? 300 : window.innerWidth - 50;
-  const graphHeight = window.innerHeight > 768 ? 160 : window.innerHeight / 2;
+
 
   return (
     <>
